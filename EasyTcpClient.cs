@@ -8,7 +8,6 @@ namespace MySocketLibrary
     internal class EasyTcpClient : IConnection
     {
         private readonly AsyncTcpClient client;
-        private readonly Encoding encoding;
         private readonly int connectRetryTimeoutMs;
         private readonly int connectRetryIntervalMs;
 
@@ -37,6 +36,8 @@ namespace MySocketLibrary
             get => client.Connected;
         }
 
+        public Encoding Encoding { get; init; }
+
         /// <param name="encoding">Encoding to be used for <see cref="DataReceivedAsString"/> and <see cref="SendStringAsync(string)"/></param>
         /// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
         /// <param name="connectRetryTimeoutMs">Duration that the socket will attempt to connect before timing out</param>
@@ -52,9 +53,10 @@ namespace MySocketLibrary
                 client.StatusDisconnected += Client_Disconnected;
             }
 
-            this.encoding = encoding;
             this.connectRetryTimeoutMs = connectRetryTimeoutMs;
             this.connectRetryIntervalMs = connectRetryIntervalMs;
+
+            Encoding = encoding;
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace MySocketLibrary
 
         public async ValueTask SendStringAsync(string text)
         {
-            await client.SendAsync(encoding.GetBytes(text));
+            await client.SendAsync(Encoding.GetBytes(text));
         }
 
         // private
@@ -101,7 +103,7 @@ namespace MySocketLibrary
         private void Client_DataReceived(object? sender, byte[] data)
         {
             // Trigger event
-            DataReceivedAsString?.Invoke(this, encoding.GetString(data));
+            DataReceivedAsString?.Invoke(this, Encoding.GetString(data));
         }
     }
 }

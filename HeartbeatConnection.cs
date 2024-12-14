@@ -32,8 +32,8 @@ namespace MySocketLibrary
             this.inner.DataReceivedAsBytes += Inner_DataReceivedAsBytes;
         }
 
-        public HeartbeatConnection(IConnection inner, string heartbeatPayload, Encoding encoding, int receiveTimeoutMs = 3_000, int heartbeatTimeoutMs = 5_000)
-            : this(inner, encoding.GetBytes(heartbeatPayload), receiveTimeoutMs, heartbeatTimeoutMs)
+        public HeartbeatConnection(IConnection inner, string heartbeatPayload, int receiveTimeoutMs = 3_000, int heartbeatTimeoutMs = 5_000)
+            : this(inner, inner.Encoding.GetBytes(heartbeatPayload), receiveTimeoutMs, heartbeatTimeoutMs)
         {
         }
 
@@ -62,6 +62,8 @@ namespace MySocketLibrary
         }
 
         public bool Connected => inner.Connected;
+
+        public Encoding Encoding => inner.Encoding;
 
         public void ConnectAsync() => inner.ConnectAsync();
 

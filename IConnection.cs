@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MySocketLibrary
@@ -11,6 +12,8 @@ namespace MySocketLibrary
         public event EventHandler<string> DataReceivedAsString;
 
         public bool Connected { get; }
+
+        public Encoding Encoding { get; }
 
         public void ConnectAsync();
 
