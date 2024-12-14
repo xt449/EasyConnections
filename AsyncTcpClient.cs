@@ -113,23 +113,6 @@ namespace MySocketLibrary
             }
         }
 
-        public async ValueTask<int> ReceiveAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
-        {
-            if (socket == null)
-            {
-                return 0;
-            }
-
-            try
-            {
-                return await socket.ReceiveAsync(buffer, SocketFlags.None, cancellationToken);
-            }
-            catch (SocketException)
-            {
-                return 0;
-            }
-        }
-
         // private
 
         private void StartReceivingData()
