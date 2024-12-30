@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SimpleSocketLibrary
 {
-    internal class HeartbeatConnection : IConnection
+    public class HeartbeatConnection : IConnection
     {
         private readonly IConnection inner;
         private readonly byte[] heartbeatPayload;

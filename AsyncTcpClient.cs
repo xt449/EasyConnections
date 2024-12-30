@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SimpleSocketLibrary
 {
-    internal class AsyncTcpClient
+    public class AsyncTcpClient
     {
         private const int BUFFER_SIZE = 8192;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SimpleSocketLibrary
 {
-    internal class EasyTcpClient : IConnection
+    public class EasyTcpClient : IConnection
     {
         private readonly AsyncTcpClient client;
         private readonly int connectRetryTimeoutMs;

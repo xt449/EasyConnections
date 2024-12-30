@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace SimpleSocketLibrary
 {
-    internal class HeartbeatHandler
+    public class HeartbeatHandler
     {
         private readonly IConnection connection;
         private readonly byte[] heartbeatPayload;
