@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SimpleSocketLibrary
 {
-    public class EasyTcpClient : IConnection
+    public class EasyTcpConnection : IConnection
     {
         private readonly AsyncTcpClient client;
         private readonly int connectRetryTimeoutMs;
@@ -42,7 +42,7 @@ namespace SimpleSocketLibrary
         /// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
         /// <param name="connectRetryTimeoutMs">Duration that the socket will attempt to connect before timing out</param>
         /// <param name="connectRetryIntervalMs">Interval that the socket will attempt to connect if the first attempt times out</param>
-        public EasyTcpClient(string host, int port, Encoding encoding, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000)
+        public EasyTcpConnection(string host, int port, Encoding encoding, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000)
         {
             client = new AsyncTcpClient(host, port);
 
@@ -74,20 +74,11 @@ namespace SimpleSocketLibrary
             }
         }
 
-        public void Disconnect()
-        {
-            client.Disconnect();
-        }
+        public void Disconnect() => client.Disconnect();
 
-        public async ValueTask SendBytesAsync(Memory<byte> data)
-        {
-            await client.SendAsync(data);
-        }
+        public async ValueTask SendBytesAsync(Memory<byte> data) => await client.SendAsync(data);
 
-        public async ValueTask SendStringAsync(string text)
-        {
-            await client.SendAsync(Encoding.GetBytes(text));
-        }
+        public async ValueTask SendStringAsync(string text) => await client.SendAsync(Encoding.GetBytes(text));
 
         // private
 
