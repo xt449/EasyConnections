@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MySocketLibrary
+namespace SimpleSocketLibrary
 {
     internal class AsyncTcpClient
     {
@@ -60,7 +60,7 @@ namespace MySocketLibrary
             }
             catch (SocketException)
             {
-                // ignore
+                // Ignore
             }
 
             // Socket successfully connected
@@ -98,6 +98,7 @@ namespace MySocketLibrary
 
         public async ValueTask<int> SendAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
+            // Disconnected
             if (socket == null)
             {
                 return 0;
@@ -117,6 +118,7 @@ namespace MySocketLibrary
 
         private void StartReceivingData()
         {
+            // Disconnected
             if (socket == null)
             {
                 return;

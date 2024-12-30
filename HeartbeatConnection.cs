@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MySocketLibrary
+namespace SimpleSocketLibrary
 {
     internal class HeartbeatConnection : IConnection
     {

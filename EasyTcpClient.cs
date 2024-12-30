@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MySocketLibrary
+namespace SimpleSocketLibrary
 {
     internal class EasyTcpClient : IConnection
     {
@@ -59,10 +59,6 @@ namespace MySocketLibrary
             Encoding = encoding;
         }
 
-        /// <summary>
-        /// This can run forever if the server is not online and, therefore, is NOT awaitable.
-        /// Instead, use <see cref="StatusConnected"/>
-        /// </summary>
         public async void ConnectAsync()
         {
             await client.ConnectAsync(new CancellationTokenSource(connectRetryTimeoutMs).Token);

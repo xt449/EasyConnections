@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySocketLibrary
+namespace SimpleSocketLibrary
 {
     public interface IConnection
     {
@@ -15,6 +15,10 @@ namespace MySocketLibrary
 
         public Encoding Encoding { get; }
 
+        /// <summary>
+        /// This can run forever if the endpoint is not online.<br/>
+        /// Use <see cref="StatusConnected"/> to determine when the connection is made.
+        /// </summary>
         public void ConnectAsync();
 
         public void Disconnect();

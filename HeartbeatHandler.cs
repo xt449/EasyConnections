@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace MySocketLibrary
+namespace SimpleSocketLibrary
 {
     internal class HeartbeatHandler
     {
