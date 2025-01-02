@@ -86,6 +86,8 @@ namespace SimpleSocketLibrary
 			}
 
 			await shellStream.WriteAsync(data);
+			// Write
+			await shellStream.FlushAsync();
 		}
 
 		public async ValueTask SendStringAsync(string text)
@@ -96,6 +98,8 @@ namespace SimpleSocketLibrary
 			}
 
 			await shellStream.WriteAsync(Encoding.GetBytes(text));
+			// Write
+			await shellStream.FlushAsync();
 		}
 
 		// private
