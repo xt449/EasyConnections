@@ -1,6 +1,7 @@
 ﻿using Renci.SshNet;
 using Renci.SshNet.Common;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ namespace SimpleSocketLibrary
 			}
 
 			// Create stream after connected
-			shellStream = client.CreateShellStreamNoTerminal();
+			shellStream = client.CreateShellStream("", 0, 0, 0, 0, 4096, TERMINAL_MODES);
 			shellStream.Closed += ShellStream_Closed;
 			shellStream.DataReceived += ShellStream_DataReceived;
 
@@ -142,5 +143,9 @@ namespace SimpleSocketLibrary
 				DataReceivedAsString?.Invoke(this, e.Line);
 			}
 		}
+
+		// static
+
+		private static readonly Dictionary<TerminalModes, uint> TERMINAL_MODES = new() { [TerminalModes.ECHO] = 0 };
 	}
 }
