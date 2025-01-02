@@ -35,11 +35,16 @@ namespace SimpleSocketLibrary
 		/// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
 		public EasySshConnection(string host, int port, string username, string password, Encoding encoding, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000, int keepAliveIntervalMs = 30_000)
 		{
-			client = new SshClient(host, port, username, password);
+			var connectionInfo = new ConnectionInfo(host, port, username,
+				new NoneAuthenticationMethod(username),
+				new KeyboardInteractiveAuthenticationMethod(username),
+				new PasswordAuthenticationMethod(username, password)
+			);
+			connectionInfo.Encoding = encoding;
+
+			client = new SshClient(connectionInfo);
 			client.KeepAliveInterval = TimeSpan.FromMilliseconds(keepAliveIntervalMs);
 			client.ErrorOccurred += Client_ErrorOccurred;
-
-			client.ConnectionInfo.Encoding = encoding;
 
 			this.autoReconnect = autoReconnect;
 			this.connectRetryTimeoutMs = connectRetryTimeoutMs;
