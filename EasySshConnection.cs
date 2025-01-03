@@ -47,7 +47,7 @@ namespace SimpleSocketLibrary
 			Encoding = encoding;
 		}
 
-		public async void ConnectAsync()
+		public async Task ConnectAsync()
 		{
 			await client.ConnectAsync(new CancellationTokenSource(connectRetryTimeoutMs).Token);
 
@@ -74,6 +74,8 @@ namespace SimpleSocketLibrary
 
 		public async ValueTask SendBytesAsync(Memory<byte> data)
 		{
+			client.Disconnect();
+
 			if (shellStream == null)
 			{
 				return;
@@ -103,7 +105,7 @@ namespace SimpleSocketLibrary
 			{
 				if (!client.IsConnected)
 				{
-					ConnectAsync();
+					_ = ConnectAsync();
 				}
 			}
 		}
@@ -121,7 +123,7 @@ namespace SimpleSocketLibrary
 			{
 				if (!client.IsConnected)
 				{
-					ConnectAsync();
+					_ = ConnectAsync();
 				}
 			}
 		}

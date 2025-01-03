@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace SimpleSocketLibrary
 {
@@ -13,7 +14,7 @@ namespace SimpleSocketLibrary
 		/// This can run forever if the endpoint is not online.<br/>
 		/// Use <see cref="StatusConnected"/> to determine when the connection is made.
 		/// </summary>
-		void ConnectAsync();
+		Task ConnectAsync();
 
 		void Disconnect();
 	}
