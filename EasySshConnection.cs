@@ -1,6 +1,7 @@
 ﻿using Renci.SshNet;
 using Renci.SshNet.Common;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,11 +35,16 @@ namespace SimpleSocketLibrary
 		/// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
 		public EasySshConnection(string host, int port, string username, string password, Encoding encoding, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000, int keepAliveIntervalMs = 30_000)
 		{
-			client = new SshClient(host, port, username, password);
+			var connectionInfo = new ConnectionInfo(host, port, username,
+				new NoneAuthenticationMethod(username),
+				new KeyboardInteractiveAuthenticationMethod(username),
+				new PasswordAuthenticationMethod(username, password)
+			);
+			connectionInfo.Encoding = encoding;
+
+			client = new SshClient(connectionInfo);
 			client.KeepAliveInterval = TimeSpan.FromMilliseconds(keepAliveIntervalMs);
 			client.ErrorOccurred += Client_ErrorOccurred;
-
-			client.ConnectionInfo.Encoding = encoding;
 
 			this.autoReconnect = autoReconnect;
 			this.connectRetryTimeoutMs = connectRetryTimeoutMs;
@@ -62,7 +68,7 @@ namespace SimpleSocketLibrary
 			}
 
 			// Create stream after connected
-			shellStream = client.CreateShellStreamNoTerminal();
+			shellStream = client.CreateShellStream("", 0, 0, 0, 0, 4096, TERMINAL_MODES);
 			shellStream.Closed += ShellStream_Closed;
 			shellStream.DataReceived += ShellStream_DataReceived;
 
@@ -82,6 +88,8 @@ namespace SimpleSocketLibrary
 			}
 
 			await shellStream.WriteAsync(data);
+			// Write
+			await shellStream.FlushAsync();
 		}
 
 		public async ValueTask SendStringAsync(string text)
@@ -92,6 +100,8 @@ namespace SimpleSocketLibrary
 			}
 
 			await shellStream.WriteAsync(Encoding.GetBytes(text));
+			// Write
+			await shellStream.FlushAsync();
 		}
 
 		// private
@@ -144,5 +154,9 @@ namespace SimpleSocketLibrary
 				DataReceivedAsString?.Invoke(this, e.Line);
 			}
 		}
+
+		// static
+
+		private static readonly Dictionary<TerminalModes, uint> TERMINAL_MODES = new() { [TerminalModes.ECHO] = 0 };
 	}
 }
