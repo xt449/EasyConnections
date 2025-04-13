@@ -7,7 +7,7 @@
 	<Version>0.1.0</Version>
 	<Title>$(AssemblyName)</Title>
 	<RepositoryType>git</RepositoryType>
-	<RepositoryUrl>https://github.com/xt449/SvelteWebSocketServer</RepositoryUrl>
+	<RepositoryUrl>https://github.com/xt449/EasyConnections</RepositoryUrl>
 	<Copyright>Copyright 2025</Copyright>
 	<Authors>Jonathan Talcott</Authors>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
