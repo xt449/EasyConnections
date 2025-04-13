@@ -1,21 +1,20 @@
-﻿using System;
+﻿namespace EasyConnections;
+
+using System;
 using System.Threading.Tasks;
 
-namespace SimpleSocketLibrary
+public interface IConnection : IDataIO
 {
-	public interface IConnection : IDataIO
-	{
-		event EventHandler StatusConnected;
-		event EventHandler StatusDisconnected;
+	event EventHandler StatusConnected;
+	event EventHandler StatusDisconnected;
 
-		bool Connected { get; }
+	bool Connected { get; }
 
-		/// <summary>
-		/// This can run forever if the endpoint is not online.<br/>
-		/// Use <see cref="StatusConnected"/> to determine when the connection is made.
-		/// </summary>
-		Task ConnectAsync();
+	/// <summary>
+	/// This can run forever if the endpoint is not online.<br/>
+	/// Use <see cref="StatusConnected"/> to determine when the connection is made.
+	/// </summary>
+	Task ConnectAsync();
 
-		void Disconnect();
-	}
+	void Disconnect();
 }
