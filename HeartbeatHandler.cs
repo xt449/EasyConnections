@@ -1,7 +1,7 @@
-﻿namespace EasyConnections;
-
-using System;
+﻿using System;
 using System.Threading;
+
+namespace EasyConnections;
 
 public class HeartbeatHandler
 {
