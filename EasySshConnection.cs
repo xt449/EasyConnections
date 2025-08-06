@@ -34,7 +34,11 @@ public class EasySshConnection : IConnection
 	public UsernamePasswordAuthentication Authentication { get; init; }
 
 	/// <param name="encoding">Encoding to be used for <see cref="DataReceivedAsString"/> and <see cref="SendStringAsync(string)"/></param>
+	/// <param name="authentication">May be used for authentication</param>
 	/// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
+	/// <param name="connectRetryTimeoutMs">Duration that the socket will attempt to connect before timing out</param>
+	/// <param name="connectRetryIntervalMs">Interval that the socket will attempt to connect if the first attempt times out</param>
+	/// <param name="keepAliveIntervalMs">Interval that the SSH client will send keep-alive messages</param>
 	public EasySshConnection(string host, int port, Encoding encoding, UsernamePasswordAuthentication authentication, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000, int keepAliveIntervalMs = 30_000)
 	{
 		var connectionInfo = new ConnectionInfo(host, port, authentication.username,

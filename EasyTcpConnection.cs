@@ -39,8 +39,9 @@ public class EasyTcpConnection : IConnection
 	public Encoding Encoding { get; init; }
 
 	public UsernamePasswordAuthentication Authentication { get; init; }
-
+	
 	/// <param name="encoding">Encoding to be used for <see cref="DataReceivedAsString"/> and <see cref="SendStringAsync(string)"/></param>
+	/// <param name="authentication">May be used for authentication</param>
 	/// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
 	/// <param name="connectRetryTimeoutMs">Duration that the socket will attempt to connect before timing out</param>
 	/// <param name="connectRetryIntervalMs">Interval that the socket will attempt to connect if the first attempt times out</param>
