@@ -38,11 +38,13 @@ public class EasyUdpConnection : IConnection
 
 	public Encoding Encoding { get; init; }
 
+	public UsernamePasswordAuthentication Authentication { get; init; }
+
 	/// <param name="encoding">Encoding to be used for <see cref="DataReceivedAsString"/> and <see cref="SendStringAsync(string)"/></param>
 	/// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
 	/// <param name="connectRetryTimeoutMs">Duration that the socket will attempt to connect before timing out</param>
 	/// <param name="connectRetryIntervalMs">Interval that the socket will attempt to connect if the first attempt times out</param>
-	public EasyUdpConnection(string host, int port, Encoding encoding, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000)
+	public EasyUdpConnection(string host, int port, Encoding encoding, UsernamePasswordAuthentication authentication, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000)
 	{
 		client = new AsyncUdpClient(host, port);
 
@@ -57,6 +59,7 @@ public class EasyUdpConnection : IConnection
 		this.connectRetryIntervalMs = connectRetryIntervalMs;
 
 		Encoding = encoding;
+		Authentication = authentication;
 	}
 
 	public async Task ConnectAsync()

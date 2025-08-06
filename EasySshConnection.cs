@@ -31,14 +31,16 @@ public class EasySshConnection : IConnection
 
 	public Encoding Encoding { get; init; }
 
+	public UsernamePasswordAuthentication Authentication { get; init; }
+
 	/// <param name="encoding">Encoding to be used for <see cref="DataReceivedAsString"/> and <see cref="SendStringAsync(string)"/></param>
 	/// <param name="autoReconnect">Reconnect after <see cref="StatusDisconnected"/> is triggered</param>
-	public EasySshConnection(string host, int port, string username, string password, Encoding encoding, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000, int keepAliveIntervalMs = 30_000)
+	public EasySshConnection(string host, int port, Encoding encoding, UsernamePasswordAuthentication authentication, bool autoReconnect = true, int connectRetryTimeoutMs = 4_000, int connectRetryIntervalMs = 1_000, int keepAliveIntervalMs = 30_000)
 	{
-		var connectionInfo = new ConnectionInfo(host, port, username,
-			new NoneAuthenticationMethod(username),
-			new KeyboardInteractiveAuthenticationMethod(username),
-			new PasswordAuthenticationMethod(username, password)
+		var connectionInfo = new ConnectionInfo(host, port, authentication.username,
+			new NoneAuthenticationMethod(authentication.username),
+			new KeyboardInteractiveAuthenticationMethod(authentication.username),
+			new PasswordAuthenticationMethod(authentication.username, authentication.password)
 		);
 		connectionInfo.Encoding = encoding;
 
@@ -51,6 +53,7 @@ public class EasySshConnection : IConnection
 		this.connectRetryIntervalMs = connectRetryIntervalMs;
 
 		Encoding = encoding;
+		Authentication = authentication;
 	}
 
 	public async Task ConnectAsync()

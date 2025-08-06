@@ -10,6 +10,8 @@ public interface IConnection : IDataIO
 
 	bool Connected { get; }
 
+	UsernamePasswordAuthentication Authentication { get; }
+
 	/// <summary>
 	/// This can run forever if the endpoint is not online.<br/>
 	/// Use <see cref="StatusConnected"/> to determine when the connection is made.
