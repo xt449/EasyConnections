@@ -3,22 +3,20 @@ using System.Text.RegularExpressions;
 
 namespace EasyConnections.Utility;
 
-public class FramingInputBuffer
+public class RegexFramedInputBuffer
 {
-	private readonly IDataIO io;
-	private readonly Regex[] frameExpressions;
-
+	private readonly Regex[] frameRegexes;
 	private readonly object receiveLock;
+
 	private string inputBuffer;
 
 	public event EventHandler<Match>? FrameReceived;
 
-	public FramingInputBuffer(IDataIO io, params Regex[] frameExpressions)
+	public RegexFramedInputBuffer(IDataIO io, params Regex[] regexes)
 	{
-		this.io = io;
-		this.frameExpressions = frameExpressions;
-
+		frameRegexes = regexes;
 		receiveLock = new object();
+
 		inputBuffer = "";
 
 		io.DataReceivedAsString += Io_DataReceivedAsString;
@@ -37,7 +35,7 @@ public class FramingInputBuffer
 				// Reset match found
 				match = null;
 
-				foreach (Regex regex in frameExpressions)
+				foreach (Regex regex in frameRegexes)
 				{
 					match = regex.Match(inputBuffer);
 
