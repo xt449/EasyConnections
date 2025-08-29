@@ -4,7 +4,7 @@
 	<TargetFramework>net8.0</TargetFramework>
 	<ImplicitUsings>disable</ImplicitUsings>
 	<Nullable>enable</Nullable>
-	<Version>0.3.2</Version>
+	<Version>0.3.3</Version>
 	<Title>$(AssemblyName)</Title>
 	<RepositoryType>git</RepositoryType>
 	<RepositoryUrl>https://github.com/xt449/EasyConnections</RepositoryUrl>
