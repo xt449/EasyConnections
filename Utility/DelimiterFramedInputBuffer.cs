@@ -43,7 +43,7 @@ public class DelimiterFramedInputBuffer
 						// Get first frame including delimiter
 						string frame = inputBuffer.Substring(0, delimiterEndIndex);
 
-						// Remove frame from front of buffer
+						// Remove up to end of delimeter
 						inputBuffer = inputBuffer.Substring(delimiterEndIndex + delimiter.Length);
 
 						FrameReceived?.Invoke(this, frame);

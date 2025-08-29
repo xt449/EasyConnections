@@ -42,7 +42,7 @@ public class RegexFramedInputBuffer
 					if (match.Success)
 					{
 						// Remove up to end of match
-						inputBuffer = inputBuffer.Remove(0, match.Index + match.Length);
+						inputBuffer = inputBuffer.Substring(match.Index + match.Length);
 
 						FrameReceived?.Invoke(this, match);
 						break;
