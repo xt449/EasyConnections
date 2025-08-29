@@ -10,7 +10,7 @@ public static class FramedInputBuffers
 		new DelimiterFramedInputBuffer(io, delimiters).FrameReceived += (_, data) => listener(data);
 	}
 
-	internal static void AddRegexFramedReceiveListener(this IDataIO io, Action<Match> listener, params Regex[] regexes)
+	public static void AddRegexFramedReceiveListener(this IDataIO io, Action<Match> listener, params Regex[] regexes)
 	{
 		new RegexFramedInputBuffer(io, regexes).FrameReceived += (_, data) => listener(data);
 	}
