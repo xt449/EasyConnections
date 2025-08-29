@@ -49,15 +49,19 @@ public class AsyncQueue<T> : IDisposable
 		// Flag as disposed
 		disposed = true;
 
+		// Clear
+		backing.Clear();
+
 		// Cancel
 		cancellationSource.Cancel();
+
+		// Wait for task to complete
+		processQueueTask.Wait();
 
 		// Dispose members
 		semaphore.Dispose();
 		cancellationSource.Dispose();
-
-		// Wait for task to complete
-		processQueueTask.Wait();
+		processQueueTask.Dispose();
 
 		GC.SuppressFinalize(this);
 	}
