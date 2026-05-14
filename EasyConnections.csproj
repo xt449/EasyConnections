@@ -8,11 +8,11 @@
 	<Title>$(AssemblyName)</Title>
 	<RepositoryType>git</RepositoryType>
 	<RepositoryUrl>https://github.com/xt449/EasyConnections</RepositoryUrl>
-	<Copyright>Copyright 2025</Copyright>
+	<Copyright>Copyright 2026</Copyright>
 	<Authors>Jonathan Talcott</Authors>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<GenerateDocumentationFile>False</GenerateDocumentationFile>
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
