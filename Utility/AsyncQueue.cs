@@ -92,8 +92,15 @@ public class AsyncQueue<T> : IDisposable
 		// While not cancelled
 		while (!cancellationSource.IsCancellationRequested)
 		{
-			// Wait for semaphore or cancellation
-			await semaphore.WaitAsync(cancellationToken);
+			try
+			{
+				// Wait for semaphore or cancellation
+				await semaphore.WaitAsync(cancellationToken);
+			}
+			catch (OperationCanceledException)
+			{
+
+			}
 
 			// Get element from queue
 			if (backing.TryDequeue(out T? element))
