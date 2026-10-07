@@ -79,7 +79,14 @@ public class EasySshConnection : IConnection
 
 	public async Task ConnectAsync()
 	{
-		await client.ConnectAsync(new CancellationTokenSource(connectRetryTimeoutMs).Token);
+		try
+		{
+			await client.ConnectAsync(new CancellationTokenSource(connectRetryTimeoutMs).Token);
+		}
+		catch (OperationCanceledException)
+		{
+
+		}
 
 		// Retry loop
 		while (!client.IsConnected)
@@ -87,8 +94,15 @@ public class EasySshConnection : IConnection
 			// Wait before attempting to connect again
 			await Task.Delay(connectRetryIntervalMs);
 
-			// Try again
-			await client.ConnectAsync(new CancellationTokenSource(connectRetryTimeoutMs).Token);
+			try
+			{
+				// Try again
+				await client.ConnectAsync(new CancellationTokenSource(connectRetryTimeoutMs).Token);
+			}
+			catch (OperationCanceledException)
+			{
+
+			}
 		}
 
 		// Create stream after connected
